@@ -1,5 +1,8 @@
 # Baseball Geared Large Language Model
 
+## Demo
+https://github.com/user-attachments/assets/e4b6a2c8-0b67-49b2-bb76-5f78b7e0a823
+
 ## Overview
 The goal of this project was to create and train a large language model from scratch using the Transformer architecture. I wanted to then tailor the model to answer questions related to baseball. I found it to be quite a challenge to collect a substantial amount of baseball specific data, but I was able to find some to train the model on. After comparing the baseball-tuned model with the regular model, it was clear that baseball themed questions were answered much better by the baseball-tuned model, but essentially all other types of questions were far better answered by the general model. 
 
@@ -17,5 +20,27 @@ After I pretrained the model, I used the Nectar dataset from berkley-nest to fin
 ![fintuning_loss](https://github.com/user-attachments/assets/a16ad6e1-c5ac-4cd0-82be-36974755580d)
 
 ## Baseball Model
+After I had successfully finetuned a general model, I wanted to gear the model toward answering baseball questions. As I mentioned earlier, I found it extremely difficult to find pure text documents with relations to baseball. I ended up using the official baseball rules from 2021 to continue to pretrain the model. I trained it for 5 epochs on this data in an attempt to have the model learn about baseball but not forget about the previous training. I then used a small dataset of around 1000 baseball specific question answer pairs to finetune the model and increase its ability to answer baseball specific questions.
 
 ## Results
+After training both the general model and the baseball specific model I compared their answers to different questions. The baseball model did successfully answer questions related to baseball far better than the general model did. However, the baseball model produced significantly worse results for essentially all other questions than the baseball model. Below are some examples comparing the two models on baseball and non-baseball questions. "User" designates the input I gave the model and "Assistant" designates the model's response.
+
+I asked both models to explain what a fastball is in baseball. Here is the response from the baseball geared model:
+
+![Fastball Good](https://github.com/user-attachments/assets/57e889fb-4e01-408b-82de-395289ca269f)
+
+And from the general model:
+
+![Screenshot 2024-08-25 161345](https://github.com/user-attachments/assets/e1804649-ce05-4df5-9528-4cd732c9e307)
+
+Clearly, the model that is geared toward baseball provides a much better result. Though it is far from perfect which is to be expected given the small size of the model, it does provide some facts about a fastball. However, this does take away from its ability to answer other questions. Here I asked both models to explain machine learning and its relation to LLMs. Here is the response from the baseball model. As you can see, it is trying to relate back to StatCast, the program that the MLB uses to keep track of statistics.
+
+![Screenshot 2024-08-25 162330](https://github.com/user-attachments/assets/3b1b1047-28d8-4cad-b362-759310c45c4c)
+
+And here is the response from the general model:
+
+![Screenshot 2024-08-25 161857](https://github.com/user-attachments/assets/fb05d0f2-5278-4cb0-a5f5-c20196e0e4a8)
+
+
+## Outcomes
+Though these responses are far from perfect, they do represent the difference between the two models. The baseball geared model truly does answer questions regarding baseball far better than the general model. However, it does lose its genearlity because of its specific finetuning. Overall though, both consistently generate grammatically correct content that generally makes sense.
