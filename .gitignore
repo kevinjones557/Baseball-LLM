@@ -1,0 +1,5 @@
+data/edu_fineweb10B/*
+data/finetune data/*
+__pycache__/*
+model/__pycache__/*
+model/*.pth
