@@ -43,4 +43,4 @@ And here is the response from the general model:
 
 
 ## Outcomes
-Though these responses are far from perfect, they do represent the difference between the two models. The baseball geared model truly does answer questions regarding baseball far better than the general model. However, it does lose its genearlity because of its specific finetuning. Overall though, both consistently generate grammatically correct content that generally makes sense.
+Though these responses are far from perfect given the small nature of the models, they do represent the difference between a model that has been geared toward a topic and one that has not. The baseball specific model definetly answers baseball questions far better than the general model. However, it does lose its genearlity because of its specific finetuning. Overall though, both consistently generate grammatically correct content that generally makes sense.
