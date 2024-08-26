@@ -33,7 +33,7 @@ And from the general model:
 
 ![Screenshot 2024-08-25 161345](https://github.com/user-attachments/assets/e1804649-ce05-4df5-9528-4cd732c9e307)
 
-Clearly, the model that is geared toward baseball provides a much better result. Though it is far from perfect which is to be expected given the small size of the model, it does provide some facts about a fastball. However, this does take away from its ability to answer other questions. Here I asked both models to explain machine learning and its relation to LLMs. Here is the response from the baseball model. As you can see, it is trying to relate back to StatCast, the program that the MLB uses to keep track of statistics.
+Clearly, the model that is geared toward baseball provides a much better result. Though it is far from perfect, which is to be expected given the small size of the model, it does provide some facts about a fastball. However, this does take away from its ability to answer other questions. Here I asked both models to explain machine learning and its relation to LLMs. Here is the response from the baseball model. As you can see, it is trying to relate back to StatCast, the program that the MLB uses to keep track of statistics.
 
 ![Screenshot 2024-08-25 162330](https://github.com/user-attachments/assets/3b1b1047-28d8-4cad-b362-759310c45c4c)
 
