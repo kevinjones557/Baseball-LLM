@@ -1,7 +1,7 @@
 # Baseball Geared Large Language Model
 
 ## Demo
-https://github.com/user-attachments/assets/e56a7835-f552-4c2d-a4d3-70472dae28f9
+https://github.com/user-attachments/assets/7fdcf113-cbc0-47ea-a493-4c27d0059519
 
 ## Overview
 The goal of this project was to create and train a large language model from scratch using the Transformer architecture. I wanted to then tailor the model to answer questions related to baseball. I found it to be quite a challenge to collect a substantial amount of baseball specific data, but I was able to find some to train the model on. After comparing the baseball-tuned model with the regular model, it was clear that baseball themed questions were answered much better by the baseball-tuned model, but essentially all other types of questions were far better answered by the general model. 
