@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -115,7 +114,6 @@ if load_from_checkpoint:
     # Restore the step
     init_step = checkpoint['step']
 
-    # If you stored any configuration information, you could restore it as well
     model.config = checkpoint['config']
     train_loader.load_state('model/dataloader_state.pth')
 

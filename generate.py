@@ -2,35 +2,62 @@ import tiktoken
 import torch
 from model.gpt import *
 import torch.nn.functional as F
+import sys
+import warnings
 
+warnings.filterwarnings("ignore", message="1Torch was not compiled with flash attention.")
 
-checkpoint = torch.load('checkpoint.pth')
+sys.path.append('model/')
+
+# Load the model from the saved .pth file and specify the device
+saved_model = torch.load('model/finetuned.pth')
+
 device = "cuda"
 
 model = GPT(GPTConfig(vocab_size=50304)).to(device)
 
 # Restore the model state
-model.load_state_dict(checkpoint['model'])
+model.load_state_dict(saved_model['model'])
 
-
+# get an encoding object
 enc = tiktoken.get_encoding('gpt2')
-start = "I am going to tell you about the sport baseball. Here is what you need to know about baseball:"
-tokens = enc.encode(start)
-print(start)
-x = torch.tensor(tokens, dtype=torch.long).to(device)
-x = x.unsqueeze(0)
-max_length = 10
-while x.size(1) < max_length:
-    with torch.no_grad():
-        logits, loss = model(x)
-        logits = logits[:, -1, :]
-        probs = F.softmax(logits, dim=-1)
-        topk_probs, topk_indicies = torch.topk(probs, 50, dim=-1)
-        ix = torch.multinomial(topk_probs, 1)
-        xcol = torch.gather(topk_indicies, -1, ix)
-        x = torch.cat((x, xcol), dim=1)
-        #print(enc.decode(x))
+context = torch.tensor([], dtype=torch.long).to(device)
+max_context_length = 1024
 
-
-tokens = x[-1].tolist()
-print(enc.decode(tokens))
+while True:
+    print("User: ", end = '')
+    start = input()
+    new_context = enc.encode(start)
+    # fill context from user prompt
+    new_context = torch.tensor(new_context, dtype=torch.long).to(device)
+    # add new context to previous context
+    context = torch.cat((context, new_context), dim=0)
+    print("\nAssistant: ", end='')
+    while context.size(0) < 10000: # just in case the endoftext token is never hit
+        # no backward pass so no need to maintain graph
+        with torch.no_grad():
+            # ensure the context_length is not exceeded
+            if len(context) > max_context_length:
+                context = context[-max_context_length:]
+            # create a batch dimension
+            context = context.unsqueeze(0)
+            # run through the model
+            logits, loss = model(context)
+            logits = logits[:, -1, :]
+            probs = F.softmax(logits, dim=-1)
+            # only keep top 50 most likely tokens
+            topk_probs, topk_indicies = torch.topk(probs, 50, dim=-1)
+            # sample from the probabilites
+            ix = torch.multinomial(topk_probs, 1)
+            xcol = torch.gather(topk_indicies, -1, ix)
+            # add the next token to the context
+            context = torch.cat((context, xcol), dim=1)
+            next_char = xcol.squeeze(0).tolist()
+            # remove batch dimension so that the new context can be concatonated
+            context = context.squeeze(0)
+            # break if token is <|endoftext|>
+            if xcol.squeeze(0).tolist() == [50256]:
+                print("\n")
+                break
+            print(enc.decode(next_char), end='', flush=True)
+            #time.sleep(0.05)

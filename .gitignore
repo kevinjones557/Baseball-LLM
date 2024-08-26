@@ -3,3 +3,5 @@ data/finetune data/*
 __pycache__/*
 model/__pycache__/*
 model/*.pth
+fineweb.py
+*.pth
