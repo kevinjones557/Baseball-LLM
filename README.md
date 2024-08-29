@@ -23,6 +23,7 @@ After I pretrained the model, I used the Nectar dataset from berkley-nest to fin
 After I had successfully finetuned a general model, I wanted to gear the model toward answering baseball questions. As I mentioned earlier, I found it extremely difficult to find pure text documents with relations to baseball. I ended up using the official baseball rules from 2021 to continue to pretrain the model. I trained it for 5 epochs on this data in an attempt to have the model learn about baseball but not forget about the previous training. I then used a small dataset of around 1000 baseball specific question answer pairs to finetune the model and increase its ability to answer baseball specific questions.
 
 ## Results
+### Non-numerical Results
 After training both the general model and the baseball specific model I compared their answers to different questions. The baseball model did successfully answer questions related to baseball far better than the general model did. However, the baseball model produced significantly worse results for essentially all other questions than the baseball model. Below are some examples comparing the two models on baseball and non-baseball questions. "User" designates the input I gave the model and "Assistant" designates the model's response.
 
 I asked both models to explain what a fastball is in baseball. Here is the response from the baseball geared model:
@@ -41,6 +42,8 @@ And here is the response from the general model:
 
 ![Screenshot 2024-08-25 161857](https://github.com/user-attachments/assets/fb05d0f2-5278-4cb0-a5f5-c20196e0e4a8)
 
+### Numerical Results
+To numerically compare the baseball model against the generic model, I split the baseball question and answer pairs into training and validation sets. The validation set was used to compare both models performance. Neither model had seen these pairs before. To compare the models, I filled the context with the question and recorded each model's output probability corresponding to the correct next token. I then took the average of the probabilites for each model. The baseball model had an average probability of .43 for the correct token. The general model only had an average probability of .29 for the correct token. This means that the baseball model observed a 50 % larger probability for the correct token.
 
 ## Outcomes
 Though these responses are far from perfect given the small nature of the model, they do represent the difference between a model that has been geared toward a topic and one that has not. The baseball specific model definetly answers baseball questions far better than the general model. However, it does lose its genearlity because of its specific finetuning. Overall though, both consistently generate grammatically correct content that generally makes sense.
