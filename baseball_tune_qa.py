@@ -14,21 +14,20 @@ model = GPT(GPTConfig(vocab_size=50304)).to(device)
 
 torch.set_float32_matmul_precision('high')
 
-max_lr = 3e-6
+max_lr = 3e-5
 epochs = 5
-val_check_freq = 50
 
 optimizer = model.configure_optimizers(weight_decay=0.1, learning_rate=max_lr)
 
-pretrained = torch.load('model/finetuned.pth')
+pretrained = torch.load('model/baseball_finetuned1.pth')
 
 model.load_state_dict(pretrained['model'])
 
 model.config = pretrained['config']
 
-print('Loading data from baseball_pairs.pkl')
+print('Loading data from baseball_qa.pkl')
 
-with open('data/baseball data/baseball_pairs.pkl', 'rb') as f:
+with open('data/baseball data/baseball_qa.pkl', 'rb') as f:
     data = pickle.load(f)
 
 for epoch in range(50):
@@ -57,6 +56,6 @@ checkpoint = {
     'config' : model.config,
 }
 
-torch.save(checkpoint, 'model/baseball_finetuned.pth')
+torch.save(checkpoint, 'model/baseball_finetuned2.pth')
 print("Saved Checkpoint")
         

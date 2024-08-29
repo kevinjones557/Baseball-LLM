@@ -10,11 +10,11 @@ warnings.filterwarnings("ignore", message="1Torch was not compiled with flash at
 sys.path.append('model/')
 
 # Load the model from the saved .pth file and specify the device
-saved_model = torch.load('model/finetuned.pth')
+saved_model = torch.load('model/baseball_finetuned2.pth')
 
 device = "cuda"
 
-model = GPT(GPTConfig(vocab_size=50304)).to(device)
+model = GPT(GPTConfig(vocab_size=50304, device='cuda')).to(device)
 
 # Restore the model state
 model.load_state_dict(saved_model['model'])
@@ -59,5 +59,10 @@ while True:
             if xcol.squeeze(0).tolist() == [50256]:
                 print("\n")
                 break
+            if next_char == [247]:
+                continue
+            if next_char == [447]:
+                print("'", end='', flush=True)
+                continue
             print(enc.decode(next_char), end='', flush=True)
             #time.sleep(0.05)
