@@ -45,8 +45,8 @@ while True:
             logits, loss = model(context)
             logits = logits[:, -1, :]
             probs = F.softmax(logits, dim=-1)
-            # only keep top 50 most likely tokens
-            topk_probs, topk_indicies = torch.topk(probs, 50, dim=-1)
+            # only keep top 10 most likely tokens
+            topk_probs, topk_indicies = torch.topk(probs, 10, dim=-1)
             # sample from the probabilites
             ix = torch.multinomial(topk_probs, 1)
             xcol = torch.gather(topk_indicies, -1, ix)
