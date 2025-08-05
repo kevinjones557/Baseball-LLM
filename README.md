@@ -1,3 +1,6 @@
+![Model](https://img.shields.io/badge/model-124M-blue)
+![Tokens](https://img.shields.io/badge/tokens-2B%20pretraining%2C%20200M%20finetuning-blue)
+
 # Baseball Geared Large Language Model
 
 ## Demo
